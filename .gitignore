@@ -1,0 +1,15 @@
+# --- Rust / Cargo ---
+/target
+Cargo.lock
+
+# --- JetBrains IDEs (RustRover, CLion, IntelliJ) ---
+.idea/
+*.iml
+
+# --- Archivos del Sistema / OS ---
+.DS_Store
+Thumbs.db
+
+# --- Configuraciones Locales / Pruebas ---
+*.log
+.env
