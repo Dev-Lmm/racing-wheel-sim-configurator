@@ -1,0 +1,64 @@
+import { Slider, Button, VerticalBox, GroupBox } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    title: "Racing Wheel Sim Configurator (Linux Native)";
+    min-width: 500px;
+    min-height: 400px;
+
+    // Propiedades expuestas hacia Rust
+    in-out property <int> rotation-angle: 900;
+    in-out property <string> status-text: "Buscando volante...";
+
+    // Evento que escuchará Rust
+    callback rotation-changed(int);
+
+    VerticalBox {
+        padding: 20px;
+        spacing: 20px;
+
+        Text {
+            text: "SimWheel Configurator 🏎️";
+            font-size: 20pt;
+            font-weight: 700;
+            horizontal-alignment: center;
+        }
+
+        GroupBox {
+            title: "Estado del Dispositivo";
+            Text {
+                text: root.status-text;
+                font-size: 11pt;
+                color: #4caf50;
+            }
+        }
+
+        GroupBox {
+            title: "Configuración de Rotación";
+            VerticalBox {
+                spacing: 10px;
+                Text {
+                    text: "Ángulo máximo: " + root.rotation-angle + "°";
+                    font-size: 14pt;
+                    horizontal-alignment: center;
+                }
+
+                Slider {
+                    minimum: 180;
+                    maximum: 900;
+                    value: root.rotation-angle;
+                    changed(val) => {
+                        root.rotation-angle = Math.round(val);
+                    }
+                }
+            }
+        }
+
+        Button {
+            text: "Aplicar Cambios";
+            primary: true;
+            clicked => {
+                root.rotation-changed(root.rotation-angle);
+            }
+        }
+    }
+}
